@@ -60,5 +60,15 @@ namespace _01_NoTimeForATaxicab
 
       distance.Should().Be(expectedDistance);
     }
+
+    [Fact]
+    public void Can_get_distance_to_visted()
+    {
+      var input = "R8, R4, R4, R8";
+
+      var distance = Logic.ProcessInputAndStopAtVisited(input);
+
+      distance.Should().Be(4);
+    }
   }
 }

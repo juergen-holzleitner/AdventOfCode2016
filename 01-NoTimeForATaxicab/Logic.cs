@@ -41,6 +41,34 @@
       return pos.GetManhattanDistance();
     }
 
+    internal static int ProcessInputAndStopAtVisited(string input)
+    {
+      var steps = ParseInput(input);
+      var pos = new Pos();
+      var visited = new HashSet<(int X, int Y)>
+      {
+        (pos.X, pos.Y)
+      };
+
+      void doStepping()
+      {
+        foreach (var step in steps)
+        {
+          pos.DoStep(new Step(step.Action, 0));
+
+          for (int n = 0; n < step.Distance; ++n)
+          {
+            pos.DoMove(1);
+            if (!visited.Add((pos.X, pos.Y)))
+              return;
+          }
+        }
+      }
+
+      doStepping();
+      return pos.GetManhattanDistance();
+    }
+
     public enum Action
     {
       TurnRight,
@@ -67,24 +95,24 @@
       internal void DoStep(Step step)
       {
         CurrentDirection = GetNewDirection(CurrentDirection, step.Action);
-        DoMove(step);
+        DoMove(step.Distance);
       }
 
-      private void DoMove(Step step)
+      internal void DoMove(int distance)
       {
         switch (CurrentDirection)
         {
           case Direction.North:
-            Y += step.Distance;
+            Y += distance;
             break;
           case Direction.East:
-            X += step.Distance;
+            X += distance;
             break;
           case Direction.South:
-            Y -= step.Distance;
+            Y -= distance;
             break;
           case Direction.West:
-            X -= step.Distance;
+            X -= distance;
             break;
           default:
             throw new ArgumentException("Invalid direction");
