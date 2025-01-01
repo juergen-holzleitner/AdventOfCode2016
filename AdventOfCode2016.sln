@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01-NoTimeForATaxicab", "01-NoTimeForATaxicab\01-NoTimeForATaxicab.csproj", "{73818E45-C0B2-4D71-936A-047BD8206B47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02-Bathroom_Security", "02-Bathroom_Security\02-Bathroom_Security.csproj", "{852BB7F6-ECA4-46E4-9528-2858AA15C31F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{73818E45-C0B2-4D71-936A-047BD8206B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73818E45-C0B2-4D71-936A-047BD8206B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73818E45-C0B2-4D71-936A-047BD8206B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{852BB7F6-ECA4-46E4-9528-2858AA15C31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{852BB7F6-ECA4-46E4-9528-2858AA15C31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{852BB7F6-ECA4-46E4-9528-2858AA15C31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{852BB7F6-ECA4-46E4-9528-2858AA15C31F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
