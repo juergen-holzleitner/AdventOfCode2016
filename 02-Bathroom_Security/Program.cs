@@ -2,5 +2,8 @@
 
 var inputText = File.ReadAllText("input.txt");
 
-var bathroomCode = Logic.GetBathroomCode(inputText);
-Console.WriteLine($"1. {nameof(bathroomCode)}: {bathroomCode}");
+var bathroomCodeOnSquare = Logic.GetBathroomCodeOnSquareKeypad(inputText);
+Console.WriteLine($"1. {nameof(bathroomCodeOnSquare)}: {bathroomCodeOnSquare}");
+
+var bathroomCodeOnDiamond = Logic.GetBathroomCodeOnDiamondKeypad(inputText);
+Console.WriteLine($"2. {nameof(bathroomCodeOnDiamond)}: {bathroomCodeOnDiamond}");

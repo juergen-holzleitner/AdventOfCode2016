@@ -4,10 +4,14 @@ namespace _02_Bathroom_Security
 {
   internal class Logic
   {
-    internal static string GetBathroomCode(string inputText)
+    internal static string GetBathroomCodeOnDiamondKeypad(string inputText) => GetBathroomCodeOnSquareKeypad(Keypad.Shape.Diamond, inputText);
+
+    internal static string GetBathroomCodeOnSquareKeypad(string inputText) => GetBathroomCodeOnSquareKeypad(Keypad.Shape.Square, inputText);
+
+    internal static string GetBathroomCodeOnSquareKeypad(Keypad.Shape shape, string inputText)
     {
       var input = ParseInput(inputText);
-      var keypad = new Keypad();
+      var keypad = new Keypad(shape);
 
       var sb = new StringBuilder();
 
@@ -38,13 +42,69 @@ namespace _02_Bathroom_Security
 
     internal class Keypad
     {
-      public Keypad()
+      public Keypad(Shape shape)
       {
+        this.CurrentShape = shape;
+        CurrentPos = GetInitialPos();
       }
 
-      public Pos CurrentPos { get; set; } = new(1, 1);
+      public Shape CurrentShape { get; set; }
+      public Pos CurrentPos { get; set; }
+
+      public enum Shape
+      {
+        Square,
+        Diamond
+      }
+
+      private Pos GetInitialPos()
+      {
+        return CurrentShape switch
+        {
+          Shape.Square => new(1, 1),
+          Shape.Diamond => new(2, 0),
+          _ => throw new ArgumentException("Invalid shape")
+        };
+      }
 
       internal char GetKey()
+      {
+        if (CurrentShape == Shape.Square)
+          return GetKeyForSquare();
+        else if (CurrentShape == Shape.Diamond)
+          return GetKeyForDiamond();
+        else
+          throw new ApplicationException("Invalid shape");
+
+      }
+
+      private char GetKeyForDiamond()
+      {
+        return CurrentPos switch
+        {
+          { Row: 0, Col: 2 } => '1',
+
+          { Row: 1, Col: 1 } => '2',
+          { Row: 1, Col: 2 } => '3',
+          { Row: 1, Col: 3 } => '4',
+
+          { Row: 2, Col: 0 } => '5',
+          { Row: 2, Col: 1 } => '6',
+          { Row: 2, Col: 2 } => '7',
+          { Row: 2, Col: 3 } => '8',
+          { Row: 2, Col: 4 } => '9',
+
+          { Row: 3, Col: 1 } => 'A',
+          { Row: 3, Col: 2 } => 'B',
+          { Row: 3, Col: 3 } => 'C',
+
+          { Row: 4, Col: 2 } => 'D',
+
+          _ => throw new ArgumentException("Invalid position")
+        };
+      }
+
+      private char GetKeyForSquare()
       {
         return CurrentPos switch
         {
@@ -76,9 +136,17 @@ namespace _02_Bathroom_Security
           CurrentPos = newPos;
       }
 
-      private static bool IsOnBoard(Pos newPos)
+      private bool IsOnBoard(Pos newPos)
       {
-        return newPos.Row >= 0 && newPos.Row <= 2 && newPos.Col >= 0 && newPos.Col <= 2;
+        if (CurrentShape == Shape.Square)
+          return newPos.Row >= 0 && newPos.Row <= 2 && newPos.Col >= 0 && newPos.Col <= 2;
+        else if (CurrentShape == Shape.Diamond)
+        {
+          var distFromCenter = Math.Abs(newPos.Row - 2) + Math.Abs(newPos.Col - 2);
+          return distFromCenter <= 2;
+        }
+        else
+          throw new ApplicationException("Invalid shape");
       }
 
       internal void Move(InputLine inputLine)
