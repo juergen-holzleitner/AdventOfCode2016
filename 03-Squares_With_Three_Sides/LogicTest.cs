@@ -12,6 +12,16 @@ namespace _03_Squares_With_Three_Sides
 
         """;
 
+    const string inputTextPart2 = """
+      101 301 501
+      102 302 502
+      103 303 503
+      201 401 601
+      202 402 602
+      203 403 603
+
+      """;
+
     [Fact]
     public void Can_parse_triangle()
     {
@@ -46,6 +56,21 @@ namespace _03_Squares_With_Three_Sides
       var numValid = Logic.GetNumValid(inputText);
 
       numValid.Should().Be(2);
+    }
+
+    [Fact]
+    public void Can_parse_triangles_vertically()
+    {
+      var triangles = Logic.ParseInputVertically(inputTextPart2);
+      triangles.Should().HaveCount(6);
+    }
+
+    [Fact]
+    public void Can_get_num_valid_vertically()
+    {
+      var numValid = Logic.GetNumValidVertically(inputTextPart2);
+
+      numValid.Should().Be(6);
     }
 
   }

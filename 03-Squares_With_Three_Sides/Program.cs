@@ -4,3 +4,6 @@ var inputText = File.ReadAllText("input.txt");
 
 var numValid = Logic.GetNumValid(inputText);
 Console.WriteLine($"{nameof(numValid)}: {numValid}");
+
+var numValidVertically = Logic.GetNumValidVertically(inputText);
+Console.WriteLine($"{nameof(numValidVertically)}: {numValidVertically}");
