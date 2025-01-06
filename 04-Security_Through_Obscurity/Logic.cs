@@ -50,5 +50,23 @@ namespace _04_Security_Through_Obscurity
       var room = ParseInput(inputText);
       return room.Where(IsRoomValid).Sum(x => (long)x.Id);
     }
+
+    internal static string DecryptRoomName(Room room)
+    {
+      var shift = room.Id;
+      return string.Join(" ", room.CodeParts.Select(x => new string(x.Select(c => ShiftChar(c, shift)).ToArray())));
+    }
+
+    private static char ShiftChar(char c, int shift)
+    {
+      var start = 'a';
+      return (char)(start + (c - start + shift) % 26);
+    }
+
+    internal static int GetRoomThatContains(string inputText, string searchText)
+    {
+      var rooms = ParseInput(inputText);
+      return rooms.First(room => DecryptRoomName(room).Contains(searchText)).Id;
+    }
   }
 }

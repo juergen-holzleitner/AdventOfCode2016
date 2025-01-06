@@ -59,5 +59,25 @@ namespace _04_Security_Through_Obscurity
       sum.Should().Be(1514);
     }
 
+    [Fact]
+    public void Can_get_decrypted_room_name()
+    {
+      var line = "qzmt-zixmtkozy-ivhz-343[zimth]";
+      var room = Logic.ParseRoom(line);
+
+      var decrypted = Logic.DecryptRoomName(room);
+
+      decrypted.Should().Be("very encrypted name");
+    }
+
+    [Fact]
+    public void Can_find_northpole_object_storage()
+    {
+      var inputText = "qzmt-zixmtkozy-ivhz-343[zimth]";
+      var roomId = Logic.GetRoomThatContains(inputText, "very");
+      roomId.Should().Be(343);
+    }
+
+
   }
 }
