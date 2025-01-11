@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03-Squares_With_Three_Sides
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04-Security_Through_Obscurity", "04-Security_Through_Obscurity\04-Security_Through_Obscurity.csproj", "{CFCB0B98-2D2E-443B-9943-6516AEB42057}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05-How_About_a_Nice_Game_of_Chess", "05-How_About_a_Nice_Game_of_Chess\05-How_About_a_Nice_Game_of_Chess.csproj", "{8157EDDF-758F-4A8B-9315-D35CE03F00F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{CFCB0B98-2D2E-443B-9943-6516AEB42057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFCB0B98-2D2E-443B-9943-6516AEB42057}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFCB0B98-2D2E-443B-9943-6516AEB42057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8157EDDF-758F-4A8B-9315-D35CE03F00F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8157EDDF-758F-4A8B-9315-D35CE03F00F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8157EDDF-758F-4A8B-9315-D35CE03F00F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8157EDDF-758F-4A8B-9315-D35CE03F00F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
