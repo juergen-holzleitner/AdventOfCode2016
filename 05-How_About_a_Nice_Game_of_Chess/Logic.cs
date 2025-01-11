@@ -4,45 +4,34 @@ namespace _05_How_About_a_Nice_Game_of_Chess
 {
   internal class Logic
   {
-    internal record PasswordChar(char Char5, char Char6);
+    internal record PasswordChar(int Char5, int Char6);
 
     internal static IEnumerable<PasswordChar> EnumeratePassword(string doorId)
     {
+      using var md5 = System.Security.Cryptography.MD5.Create();
+
       long n = 0;
       while (true)
       {
         var inputBytes = Encoding.ASCII.GetBytes(doorId + n.ToString());
-        var hash = System.Security.Cryptography.MD5.HashData(inputBytes);
-        var sb = new StringBuilder();
-        for (int i = 0; i < hash.Length; i++)
+#pragma warning disable CA1850 // Prefer static 'HashData' method over 'ComputeHash'
+        var hash = md5.ComputeHash(inputBytes); // because it is faster than HashData
+#pragma warning restore CA1850 // Prefer static 'HashData' method over 'ComputeHash'
+        if (hash[0] == 0 && hash[1] == 0 && (hash[2]&0xf0) == 0)
         {
-          sb.Append(hash[i].ToString("x2"));
+          var char5 = hash[2] & 0x0f;
+          var char6 = hash[3] >> 4;
+
+          yield return new(char5, char6);
         }
-        var str = sb.ToString();
-        if (str.StartsWith("00000"))
-        {
-          yield return new(str[5], str[6]);
-        }
+
         n++;
       }
     }
 
     internal static string GetPassword(string doorId)
     {
-      return string.Concat(EnumeratePassword(doorId).Take(8).Select(c => c.Char5));
-    }
-
-    internal static string HashDoorId(string doorId, long n)
-    {
-      var val = doorId + n.ToString();
-      var inputBytes = Encoding.ASCII.GetBytes(val);
-      var hash = System.Security.Cryptography.MD5.HashData(inputBytes);
-      var sb = new StringBuilder();
-      for (int i = 0; i < hash.Length; i++)
-      {
-        sb.Append(hash[i].ToString("x2"));
-      }
-      return sb.ToString();
+      return string.Concat(EnumeratePassword(doorId).Take(8).Select(c => c.Char5.ToString("x")));
     }
 
     internal static string GetPassword2(string doorId)
@@ -57,12 +46,12 @@ namespace _05_How_About_a_Nice_Game_of_Chess
           throw new ApplicationException("Not enough passwords");
 
         var passwordChar = passwordEnumerator.Current;
-        if (passwordChar.Char5 >= '0' && passwordChar.Char5 <= '7')
+        if (passwordChar.Char5 >= 0 && passwordChar.Char5 <= 7)
         {
-          var index = passwordChar.Char5 - '0';
+          var index = passwordChar.Char5;
           if (password[index] == null)
           {
-            password[index] = passwordChar.Char6;
+            password[index] = passwordChar.Char6.ToString("x").First();
             numCorrect++;
           }
         }
