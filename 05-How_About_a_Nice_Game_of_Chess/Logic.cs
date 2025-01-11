@@ -4,9 +4,10 @@ namespace _05_How_About_a_Nice_Game_of_Chess
 {
   internal class Logic
   {
-    internal static IEnumerable<char> EnumeratePassword(string doorId)
-    {
+    internal record PasswordChar(char Char5, char Char6);
 
+    internal static IEnumerable<PasswordChar> EnumeratePassword(string doorId)
+    {
       long n = 0;
       while (true)
       {
@@ -20,7 +21,7 @@ namespace _05_How_About_a_Nice_Game_of_Chess
         var str = sb.ToString();
         if (str.StartsWith("00000"))
         {
-          yield return str[5];
+          yield return new(str[5], str[6]);
         }
         n++;
       }
@@ -28,7 +29,7 @@ namespace _05_How_About_a_Nice_Game_of_Chess
 
     internal static string GetPassword(string doorId)
     {
-      return string.Concat(EnumeratePassword(doorId).Take(8));
+      return string.Concat(EnumeratePassword(doorId).Take(8).Select(c => c.Char5));
     }
 
     internal static string HashDoorId(string doorId, long n)
@@ -42,6 +43,32 @@ namespace _05_How_About_a_Nice_Game_of_Chess
         sb.Append(hash[i].ToString("x2"));
       }
       return sb.ToString();
+    }
+
+    internal static string GetPassword2(string doorId)
+    {
+      var password = new char?[8];
+
+      int numCorrect = 0;
+      var passwordEnumerator = EnumeratePassword(doorId).GetEnumerator();
+      while (numCorrect < 8)
+      {
+        if (!passwordEnumerator.MoveNext())
+          throw new ApplicationException("Not enough passwords");
+
+        var passwordChar = passwordEnumerator.Current;
+        if (passwordChar.Char5 >= '0' && passwordChar.Char5 <= '7')
+        {
+          var index = passwordChar.Char5 - '0';
+          if (password[index] == null)
+          {
+            password[index] = passwordChar.Char6;
+            numCorrect++;
+          }
+        }
+      }
+
+      return string.Concat(password);
     }
   }
 }

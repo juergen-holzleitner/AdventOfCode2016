@@ -22,7 +22,7 @@ namespace _05_How_About_a_Nice_Game_of_Chess
 
       var password = Logic.EnumeratePassword(doorId);
 
-      string.Concat(password.Take(3)).Should().Be("18f");
+      string.Concat(password.Take(3).Select(c => c.Char5)).Should().Be("18f");
     }
 
     [Fact]
@@ -33,6 +33,14 @@ namespace _05_How_About_a_Nice_Game_of_Chess
       var password = Logic.GetPassword(doorId);
 
       password.Should().Be("18f47a30");
+    }
+
+    [Fact]
+    public void Can_get_password2()
+    {
+      string doorId = "abc";
+      var password = Logic.GetPassword2(doorId);
+      password.Should().Be("05ace8e3");
     }
   }
 }
